@@ -87,4 +87,26 @@ resource "Orders" do
       status.should == 200
     end
   end
+
+  get "/orders/:id/member_demo" do
+    let(:id) { order.id }
+
+    example_request "Member method call of a resource" do
+      response_body.should == order.to_json
+      status.should == 200
+    end
+  end
+
+  get "/orders/collection_demo" do
+    before do
+      2.times do |i|
+        Order.create!(:name => "Order #{i}", :email => "email#{i}@example.com", :paid => true)
+      end
+    end
+
+    example_request "Collection method call of resources" do
+      response_body.should == Order.all.to_json
+      status.should == 200
+    end
+  end
 end
