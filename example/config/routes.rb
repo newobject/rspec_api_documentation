@@ -6,6 +6,8 @@ Example::Application.routes.draw do
     collection do
       get :collection_demo
     end
+
+    resources :order_items
   end
 
   match "/docs" => Raddocs::App, :anchor => false

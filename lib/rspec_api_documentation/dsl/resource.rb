@@ -20,6 +20,15 @@ module RspecApiDocumentation::DSL
       define_action :put
       define_action :delete
 
+      def resource(*args, &block)
+        options = if args.last.is_a?(Hash) then args.pop else {} end
+        options[:api_doc_dsl] = :resource
+        options[:resource_name] = args.first
+        options[:document] ||= :all
+        args.push(options)
+        context(*args, &block)
+      end
+
       def callback(*args, &block)
         require 'webmock'
         self.send(:include, WebMock::API)
