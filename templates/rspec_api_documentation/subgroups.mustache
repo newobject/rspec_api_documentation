@@ -1,0 +1,17 @@
+<li class="group">
+  <p class="group-name">{{ group_name }}</p>
+
+  <ul class="api-list">
+    {{# examples }}
+    <li class="api">
+      <a class="api-name" href="{{ url_prefix }}/{{ dirname }}/{{ filename }}">{{ description }}</a>
+    </li>
+    {{/ examples }}
+  </ul>
+
+  <ul class="group-list">
+    {{# sub_groups }}
+      {{> rspec_api_documentation/subgroups}}
+    {{/ sub_groups }}
+  </ul>
+</li>

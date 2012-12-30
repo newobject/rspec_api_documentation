@@ -15,11 +15,14 @@ module RspecApiDocumentation
     end
 
     def write
+      group = WurlIndex.new(index, configuration)
+
       File.open(configuration.docs_dir.join("index.html"), "w+") do |f|
-        f.write WurlIndex.new(index, configuration).render
+        f.write group.render
       end
+
       index.examples.each do |example|
-        html_example = WurlExample.new(example, configuration)
+        html_example = group.create_example example
         FileUtils.mkdir_p(configuration.docs_dir.join(html_example.dirname))
         File.open(configuration.docs_dir.join(html_example.dirname, html_example.filename), "w+") do |f|
           f.write html_example.render
@@ -33,10 +36,15 @@ module RspecApiDocumentation
       @index = index
       @configuration = configuration
       self.template_path = configuration.template_path
+      Mustache.template_path = configuration.template_path
     end
 
     def api_name
       @configuration.api_name
+    end
+
+    def groups
+      IndexWriter.api_groups(examples, @configuration)
     end
 
     def sections
@@ -48,14 +56,19 @@ module RspecApiDocumentation
     end
 
     def examples
-      @index.examples.map { |example| WurlExample.new(example, @configuration) }
+      @index.examples.map { |example| create_example example }
+    end
+
+    def create_example(example)
+      WurlExample.new(example, @configuration, self)
     end
   end
 
   class WurlExample < Mustache
-    def initialize(example, configuration)
+    def initialize(example, configuration, group)
       @example = example
       @host = configuration.curl_host
+      @group = group
       self.template_path = configuration.template_path
     end
 

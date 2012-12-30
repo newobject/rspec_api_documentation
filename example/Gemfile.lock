@@ -5,6 +5,7 @@ PATH
       activesupport (>= 3.0.0)
       i18n (>= 0.1.0)
       json (>= 1.4.6)
+      liquid
       mustache (>= 0.99.4)
       rspec (>= 2.6.0)
       webmock (>= 1.7.0)
@@ -77,6 +78,7 @@ GEM
     json_spec (0.7.0)
       multi_json (~> 1.0.0)
       rspec (~> 2.0)
+    liquid (2.4.1)
     mail (2.3.0)
       i18n (>= 0.4.0)
       mime-types (~> 1.16)
