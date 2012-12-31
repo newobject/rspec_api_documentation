@@ -1,0 +1,19 @@
+<li class="group">
+  <a href="{{ url_prefix }}/{{ dir_name }}">
+    {{ description }}
+  </a>
+
+  <ul class="api-list">
+    {{# examples }}
+    <li class="api">
+      <a href="{{ url_prefix }}/{{ dir_name }}/{{ fname }}">{{ description }}</a>
+    </li>
+    {{/ examples }}
+  </ul>
+
+  <ul class="group-list">
+    {{# children }}
+      {{> rspec_api_documentation/mustaches/subgroups}}
+    {{/ children }}
+  </ul>
+</li>

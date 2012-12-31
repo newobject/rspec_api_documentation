@@ -1,5 +1,6 @@
 require 'rspec/core/formatters/base_formatter'
 require 'rack/utils'
+require 'rack/test'
 require 'rack/test/utils'
 
 module RspecApiDocumentation::DSL

@@ -1,12 +1,12 @@
 module RspecApiDocumentation
   class ApiDocumentation
-    attr_reader :configuration, :index
+    attr_reader :configuration, :group
 
     delegate :docs_dir, :format, :to => :configuration
 
     def initialize(configuration)
       @configuration = configuration
-      @index = Index.new
+      @group = RspecApiDocumentation::Models::Group.new configuration
     end
 
     def clear_docs
@@ -18,21 +18,25 @@ module RspecApiDocumentation
     end
 
     def document_example(rspec_example)
-      example = Example.new(rspec_example, configuration)
+      group_descriptions = RspecApiDocumentation::Rspec::ExampleParser.parse_example(rspec_example)
+
+      last_group = @group.add_descendants(group_descriptions)
+
+      example = RspecApiDocumentation::Models::Example.new configuration, rspec_example
       if example.should_document?
-        index.examples << example
+        last_group.add_example(example)
       end
     end
 
     def write
       writers.each do |writer|
-        writer.write(index, configuration)
+        writer.write(group)
       end
     end
 
     def writers
       [*configuration.format].map do |format|
-        RspecApiDocumentation.const_get("#{format}_writer".classify)
+        RspecApiDocumentation::Writers.const_get("#{format}_writer".classify)
       end
     end
   end

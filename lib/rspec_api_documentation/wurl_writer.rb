@@ -4,13 +4,13 @@ module RspecApiDocumentation
   class WurlWriter
     attr_accessor :index, :configuration
 
-    def initialize(index, configuration)
-      self.index = index
+    def initialize(group, configuration)
+      self.group = group
       self.configuration = configuration
     end
 
-    def self.write(index, configuration)
-      writer = new(index, configuration)
+    def self.write(group, configuration)
+      writer = new(group, configuration)
       writer.write
     end
 
