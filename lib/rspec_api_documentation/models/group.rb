@@ -56,8 +56,6 @@ module RspecApiDocumentation
           RspecApiDocumentation::Models::Fileable.to_file_name(g.description)
         }.select{|name| name && !name.empty?}.join('/')
 
-        #ancestors_path.slice!(0) if ancestors_path.start_with?('/')
-
         ancestors_path
       end
 

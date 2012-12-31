@@ -25,7 +25,6 @@ module RspecApiDocumentation
 
       private
       def write_to_file(item)
-        pp "#{item.description}, #{item.file_path}"
         mkdir item
         save_file item
       end
