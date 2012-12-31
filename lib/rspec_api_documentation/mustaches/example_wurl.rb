@@ -15,6 +15,10 @@ module RspecApiDocumentation
         @configuration.url_prefix
       end
 
+      def index_and_desc
+        "#{index_number}. #{description}"
+      end
+
       def dir_path
         [@example.ancestors_name, @example.dir_name]
           .select{|name| name && !name.empty?}

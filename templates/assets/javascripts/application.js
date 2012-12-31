@@ -51,8 +51,11 @@ function Wurl(wurlForm) {
   this.$wurlForm = $(wurlForm);
   var self = this;
 
-  this.requestBodyMirror = mirror(this.$wurlForm.find('.post_body textarea')[0], $('.request.content_type', this.$wurlForm).val(), {})
-  this.responseBodyMirror = mirror(this.$wurlForm.find('.response.body textarea')[0], $('.response.content_type', this.$wurlForm).val(), { "readOnly": true, "lineNumbers":true});
+  this.requestBodyMirror = mirror(this.$wurlForm.find('.post_body textarea')[0], $('.request.content_type', this.$wurlForm).val(), {});
+
+  if(this.$wurlForm.find('.response.body textarea').length > 0){
+    this.responseBodyMirror = mirror(this.$wurlForm.find('.response.body textarea')[0], $('.response.content_type', this.$wurlForm).val(), { "readOnly": true, "lineNumbers":true});
+  }
 
   $('.give_it_a_wurl', this.$wurlForm).click(function (event) {
     event.preventDefault();

@@ -33,7 +33,12 @@ module RspecApiDocumentation
 
       def description
         return 'Home' if @group.parent.nil?
-        return @group.description
+        @group.description
+      end
+
+      def index_and_desc
+        return 'Home' if @group.parent.nil?
+        "#{index_number}. #{@group.description}"
       end
 
       def ancestors
@@ -55,6 +60,19 @@ module RspecApiDocumentation
 
         @examples
       end
+
+      def sort
+        @group.sort
+      end
+
+      def method_missing(method, *args, &block)
+        @group.send(method, *args, &block)
+      end
+
+      def respond_to?(method, include_private = false)
+        super || @group.respond_to?(method, include_private)
+      end
+
     end
   end
 end

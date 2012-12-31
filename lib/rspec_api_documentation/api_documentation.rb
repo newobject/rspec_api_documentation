@@ -32,6 +32,7 @@ module RspecApiDocumentation
     end
 
     def write
+      group.sort
       writers.each do |writer|
         writer.write(group, configuration)
       end

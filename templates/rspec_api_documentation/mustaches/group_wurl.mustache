@@ -1,14 +1,15 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>{{api_name}} > {{ description }}</title>
+  <title>{{api_name}} > {{ index_and_desc }}</title>
   <meta charset="utf-8">
   <link rel="stylesheet" href="{{ url_prefix }}/assets/stylesheets/bootstrap.css"/>
+  <link rel="stylesheet" href="{{ url_prefix }}/assets/stylesheets/main.css"/>
 </head>
 <body>
 <div class="container">
   <div class="page-header">
-    <h1>{{ description }}</h1>
+    <h1>{{ index_and_desc }}</h1>
   </div>
 
   <ul class="breadcrumb">
@@ -23,8 +24,15 @@
     </li>
   </ul>
 
-  <ul class="group-list">
-    {{> rspec_api_documentation/mustaches/subgroups}}
+  <ul class="unstyled">
+    {{# examples }}
+    <li class="api">
+    <a href="{{ url_prefix }}/{{file_path}}">{{index_number}}. {{ description }}</a>
+    </li>
+    {{/ examples }}
+    {{# children }}
+      {{> rspec_api_documentation/mustaches/subgroups}}
+    {{/ children }}
   </ul>
 
 </div>

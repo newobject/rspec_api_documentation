@@ -1,12 +1,14 @@
 module RspecApiDocumentation
   module Models
     class Group
-      attr_reader :description, :examples
-      attr_accessor :parent
+      attr_reader :description, :examples, :children
+      attr_accessor :parent, :index
 
       def initialize(description = nil)
         @description = description
-        @children = {}
+        @sorted = false
+        @children_map = {}
+        @children = []
         @examples = []
       end
 
@@ -16,18 +18,38 @@ module RspecApiDocumentation
         example
       end
 
-      def children
-        @children.values
+      def sort
+        unless @sorted
+          sort_examples
+          sort_children
+          @sorted = true
+        end
+      end
+
+      def sort_examples
+        @examples
+          .sort!{|e1, e2| e1.description <=> e2.description}
+          .each_with_index{|e, index| e.index = index + 1}
+      end
+
+      def sort_children
+        example_count = @examples.size
+        @children = @children_map.values
+        @children.sort!{|g1, g2| g1.description <=> g2.description }
+          .each_with_index{|g, index|
+            g.index = example_count + index + 1
+            g.sort
+          }
       end
 
       def add_child(description)
-        group = @children[description]
+        group = @children_map[description]
 
         unless group
           group = self.class.new(description)
           group.parent = self
 
-          @children[description] = group
+          @children_map[description] = group
         end
 
         group
@@ -57,6 +79,16 @@ module RspecApiDocumentation
         }.select{|name| name && !name.empty?}.join('/')
 
         ancestors_path
+      end
+
+      def index_number
+        n = ancestors_index
+        n << '.' unless n.empty?
+        n << index.to_s
+      end
+
+      def ancestors_index
+        ancestors.select{|g| !g.parent.nil?}.map(&:index).join('.')
       end
 
       def ancestors

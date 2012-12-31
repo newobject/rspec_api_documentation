@@ -1,0 +1,25 @@
+h1 {
+  font-size: 4em;
+  line-height: 1em;
+}
+
+body {
+  font-size: 15px;
+}
+
+ul.api, ul.group {
+  margin-left: 1.5em;
+}
+
+.article h2 {
+  background: none repeat scroll 0 0 #046D8B;
+  color: #FFFFFF;
+  border-radius: 5px 5px 5px 5px;
+  padding: 8px 15px;
+  margin: 20px 0;
+}
+
+.article h3 {
+  padding: 8px 15px;
+  margin: 20px 0;
+}

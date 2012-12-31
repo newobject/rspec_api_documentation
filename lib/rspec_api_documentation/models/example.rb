@@ -2,7 +2,7 @@ module RspecApiDocumentation
   module Models
     class Example
       attr_reader :rspec_example
-      attr_accessor :group
+      attr_accessor :group, :index
 
       def initialize(rspec_example)
         @rspec_example = rspec_example
@@ -20,6 +20,20 @@ module RspecApiDocumentation
         [self.group.ancestors_name, self.group.dir_name]
           .select{|name| name && !name.empty?}
           .join('/')
+      end
+
+      def index_number
+        n = ancestors_index
+        n << '.' unless n.empty?
+        n << index.to_s
+      end
+
+      def ancestors_index
+        ancestors.select{|g| !g.parent.nil?}.map(&:index).join('.')
+      end
+
+      def ancestors
+        group.ancestors + [group]
       end
 
       def should_document?
