@@ -6,7 +6,10 @@ module RspecApiDocumentation
 
     def initialize(configuration)
       @configuration = configuration
-      @group = RspecApiDocumentation::Models::Group.new configuration
+
+      Mustache.template_path = configuration.template_path
+
+      @group = RspecApiDocumentation::Models::Group.new
     end
 
     def clear_docs
@@ -22,7 +25,7 @@ module RspecApiDocumentation
 
       last_group = @group.add_descendants(group_descriptions)
 
-      example = RspecApiDocumentation::Models::Example.new configuration, rspec_example
+      example = RspecApiDocumentation::Models::Example.new rspec_example
       if example.should_document?
         last_group.add_example(example)
       end
@@ -30,7 +33,7 @@ module RspecApiDocumentation
 
     def write
       writers.each do |writer|
-        writer.write(group)
+        writer.write(group, configuration)
       end
     end
 

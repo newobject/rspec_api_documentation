@@ -1,13 +1,27 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>{{ api_name }}</title>
+  <title>{{api_name}} > {{ description }}</title>
   <meta charset="utf-8">
   <link rel="stylesheet" href="{{ url_prefix }}/assets/stylesheets/bootstrap.css"/>
 </head>
 <body>
 <div class="container">
-  <h1>{{ api_name }}</h1>
+  <div class="page-header">
+    <h1>{{ description }}</h1>
+  </div>
+
+  <ul class="breadcrumb">
+    {{#ancestors}}
+      <li>
+        <a href="{{ url_prefix }}/{{ file_path }}">{{ description }}</a>
+        <span class="divider">/</span>
+      </li>
+    {{/ancestors}}
+    <li class="active">
+      {{description}}
+    </li>
+  </ul>
 
   <ul class="group-list">
     {{> rspec_api_documentation/mustaches/subgroups}}

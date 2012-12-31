@@ -1,43 +1,30 @@
 module RspecApiDocumentation
   module Models
     class Group
-      attr_reader :configuration, :description, :examples
+      attr_reader :description, :examples
       attr_accessor :parent
 
-      def initialize(configuration, description = nil)
-        @configuration = configuration
+      def initialize(description = nil)
         @description = description
         @children = {}
         @examples = []
       end
 
-      def each_group(&block)
-        yield self
-
-        children.map{|child_group| child_group.each_group &block}
-      end
-
-      def each_example(&block)
-        examples.each &block
-        children.map{|child_group| child_group.each_example &block}
+      def add_example(example)
+        example.group = self
+        @examples << example
+        example
       end
 
       def children
         @children.values
       end
 
-      def add_example(example)
-        example.group = self
-
-        @examples << example
-        example
-      end
-
       def add_child(description)
         group = @children[description]
 
         unless group
-          group = RspecApiDocumentation::Models::Group.new(configuration, description)
+          group = self.class.new(description)
           group.parent = self
 
           @children[description] = group
@@ -56,32 +43,26 @@ module RspecApiDocumentation
         group
       end
 
-      def file_path(suffix)
-        dir_path.join(file_name(suffix))
-      end
-
-      def file_name(suffix)
-        "index#{suffix}"
+      def file_name
+        "index"
       end
 
       def dir_name
-        ancestors_path = ancestors.map{|g|
-          desc = g.description
-          desc = '' unless desc
-          desc.downcase
-        }.join('/')
+        RspecApiDocumentation::Models::Fileable.to_file_name(self.description)
+      end
 
-        ancestors_path.slice!(0) if ancestors_path.start_with?('/')
+      def ancestors_name
+        ancestors_path = ancestors.map{|g|
+          RspecApiDocumentation::Models::Fileable.to_file_name(g.description)
+        }.select{|name| name && !name.empty?}.join('/')
+
+        #ancestors_path.slice!(0) if ancestors_path.start_with?('/')
 
         ancestors_path
       end
 
-      def dir_path
-        configuration.docs_dir.join(dir_name)
-      end
-
       def ancestors
-        the_ancestors = [self]
+        the_ancestors = []
         current_group = self
 
         while current_group = current_group.parent
@@ -89,6 +70,17 @@ module RspecApiDocumentation
         end
 
         the_ancestors.reverse!
+      end
+
+      def each_group(&block)
+        yield self
+
+        children.map{|child_group| child_group.each_group &block}
+      end
+
+      def each_example(&block)
+        examples.each &block
+        children.map{|child_group| child_group.each_example &block}
       end
     end
   end

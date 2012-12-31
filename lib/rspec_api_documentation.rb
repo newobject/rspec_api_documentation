@@ -4,6 +4,7 @@ require 'cgi'
 require 'json'
 
 require 'rspec_api_documentation/rspec/example_parser'
+require 'rspec_api_documentation/models/fileable'
 require 'rspec_api_documentation/models/group'
 require 'rspec_api_documentation/models/example'
 require 'rspec_api_documentation/mustaches/group_wurl'

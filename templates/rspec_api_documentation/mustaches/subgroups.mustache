@@ -1,12 +1,12 @@
 <li class="group">
-  <a href="{{ url_prefix }}/{{ dir_name }}">
+  <a href="{{ url_prefix }}/{{ file_path }}">
     {{ description }}
   </a>
 
   <ul class="api-list">
     {{# examples }}
     <li class="api">
-      <a href="{{ url_prefix }}/{{ dir_name }}/{{ fname }}">{{ description }}</a>
+      <a href="{{ url_prefix }}/{{file_path}}">{{ description }}</a>
     </li>
     {{/ examples }}
   </ul>

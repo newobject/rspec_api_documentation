@@ -3,19 +3,34 @@ require 'mustache'
 module RspecApiDocumentation
   module Mustaches
     class ExampleWurl < Mustache
-      def initialize(example)
+      attr_reader :example
+
+      def initialize(example, configuration)
         @example = example
-        self.template_path = example.group.configuration.template_path
-        Mustache.template_path = self.template_path
+        @configuration = configuration
         @suffix = '.html'
       end
 
-      def file_path
-        @example.file_path(@suffix)
+      def url_prefix
+        @configuration.url_prefix
       end
 
-      def fname
-        @example.file_name(@suffix)
+      def dir_path
+        [@example.ancestors_name, @example.dir_name]
+          .select{|name| name && !name.empty?}
+          .join('/')
+      end
+
+      def file_path
+        [dir_path, @example.file_name]
+          .select{|name| name && !name.empty?}
+          .join('/') + @suffix
+      end
+
+      def ancestors
+        groups = @example.group.ancestors
+        groups << @example.group
+        groups.map{|g| RspecApiDocumentation::Mustaches::GroupWurl.new g, @configuration}
       end
 
       def method_missing(method, *args, &block)
@@ -42,10 +57,6 @@ module RspecApiDocumentation
           end
           hash
         end
-      end
-
-      def url_prefix
-        @example.group.configuration.url_prefix
       end
 
       private
