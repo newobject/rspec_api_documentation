@@ -7,6 +7,16 @@ group "Posts" do
   let(:post) { Post.create(:name => "Old Name", :title => "Old title", :content => "Old content") }
 
   get "/posts" do
+    desc """
+      This is a description, This is a description, This is a description, This is a description.
+      This is a description, This is a description, This is a description, This is a description.
+      This is a description, This is a description, This is a description, This is a description.
+
+      This is another description, This is another description, This is another description.
+      This is another description, This is another description, This is another description.
+      This is another description, This is another description, This is another description.
+    """
+
     parameter :page, "Current page of posts"
 
     let(:page) { 1 }

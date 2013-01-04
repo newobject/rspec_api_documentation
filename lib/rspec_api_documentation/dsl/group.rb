@@ -48,6 +48,10 @@ module RspecApiDocumentation::DSL
         parameters.push(options.merge(:name => name.to_s, :description => description))
       end
 
+      def desc(desc_str)
+        metadata[:desc] = desc_str
+      end
+
       def header(name, value)
         headers[name] = value
       end

@@ -11,6 +11,22 @@ module RspecApiDocumentation
         @suffix = '.html'
       end
 
+      def has_desc
+        desc_str = @example.metadata[:desc]
+        desc_str.strip! if desc_str
+
+        desc_str && !desc_str.empty?
+      end
+
+      def desc_blocks
+        desc_str = @example.metadata[:desc]
+        desc_str.strip! if desc_str
+
+        return nil if desc_str.nil? || desc_str.empty?
+
+        desc_str.split("\n\n").map{|s| s.strip}
+      end
+
       def url_prefix
         @configuration.url_prefix
       end

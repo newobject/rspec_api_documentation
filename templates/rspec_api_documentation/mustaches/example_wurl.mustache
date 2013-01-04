@@ -59,6 +59,15 @@
     </p>
     {{/ explanation }}
 
+    {{# has_desc }}
+    <h2>Description</h2>
+    {{# desc_blocks }}
+    <p>
+      {{ to_s }}
+    </p>
+    {{/ desc_blocks }}
+    {{/ has_desc }}
+
     {{# has_parameters? }}
     <h2>Parameters</h2>
     <table class="parameters table table-striped table-bordered table-condensed">
