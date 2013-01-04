@@ -3,6 +3,9 @@ Example::Application.routes.draw do
     member do
       put :scope_request
     end
+    collection do
+      get :multi_format_outputs
+    end
     resources :comments
   end
 

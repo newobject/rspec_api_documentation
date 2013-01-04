@@ -96,4 +96,12 @@ group "Posts" do
     end
   end
 
+  get "/posts/multi_format_outputs" do
+    example_request "Multi format" do
+      status.should == 200
+      self.new_request({ :error => 'Hello world' }, headers)
+      status.should == 200
+    end
+  end
+
 end

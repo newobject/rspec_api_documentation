@@ -10,6 +10,18 @@ module RspecApiDocumentation::DSL
 
     delegate :response_headers, :status, :response_status, :response_body, :to => :client
 
+    def route
+      self.example.metadata[:route]
+    end
+
+    def new_request(params, headers)
+      client.send(self.http_method, self.route, params, headers)
+    end
+
+    def http_method
+      self.example.metadata[:method]
+    end
+
     module ClassMethods
       def example_request(description, params = {}, &block)
         file_path = caller.first[0, caller.first =~ /:/]
