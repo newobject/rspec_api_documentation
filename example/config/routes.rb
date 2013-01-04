@@ -1,4 +1,7 @@
 Example::Application.routes.draw do
+  resources :posts do
+  end
+
   resources :orders do
     member do
       get :member_demo

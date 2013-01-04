@@ -1,6 +1,4 @@
-class OrdersController < ApplicationController
-  inherit_resources
-
+class OrdersController < InheritedResources::Base
   respond_to :json
 
   def member_demo
