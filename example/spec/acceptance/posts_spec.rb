@@ -3,7 +3,6 @@ require 'rspec_api_documentation/dsl'
 
 group "Posts" do
   header "Accept", "application/json"
-  header "Content-Type", "application/json"
 
   let(:post) { Post.create(:name => "Old Name", :title => "Old title", :content => "Old content") }
 
@@ -35,12 +34,11 @@ group "Posts" do
     let(:title) { "Title 1" }
     let(:content) { "Content 1" }
 
-    let(:raw_post) { params.to_json }
-
     scope_parameters :post, :all
 
     example_request "Creating an post" do
       explanation "Create an post"
+
       response_body.should be_json_eql({
         "name" => name,
         "title" => title,
@@ -62,14 +60,12 @@ group "Posts" do
   put "/posts/:id" do
     parameter :name, "Name of post"
     parameter :title, "Title of post"
-    parameter :content, "Content of ost"
+    parameter :content, "Content of post"
     scope_parameters :post, :all
 
     let(:id) { post.id }
     let(:name) { "Updated Name" }
     let(:title) { "Updated Title" }
-
-    let(:raw_post) { params.to_json }
 
     example_request "Updating an post" do
       status.should == 204
@@ -80,6 +76,22 @@ group "Posts" do
     let(:id) { post.id }
 
     example_request "Deleting an post" do
+      status.should == 204
+    end
+  end
+
+  put "/posts/:id/scope_request" do
+    parameter :name, "Name of post"
+    parameter :title, "Title of Post"
+    parameter :content, "Content of post"
+
+    scope_parameters :post, :all
+
+    let(:id) { post.id }
+    let(:name) { "NewName" }
+    let(:title) { "NewTitle" }
+
+    example_request "Scope Request demo" do
       status.should == 204
     end
   end

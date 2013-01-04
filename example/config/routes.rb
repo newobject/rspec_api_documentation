@@ -1,5 +1,8 @@
 Example::Application.routes.draw do
   resources :posts do
+    member do
+      put :scope_request
+    end
     resources :comments
   end
 

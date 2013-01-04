@@ -8,7 +8,6 @@ resource "Orders" do
 
     let!(:order) { Order.create(:name => "Order 1", :paid => true, :email => "email@example.com") }
 
-    #get "/orders/#{order.id}/order_items" do
     get "/orders/:order_id/order_items" do
       parameter :page, "Current page of orders"
 
