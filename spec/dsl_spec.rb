@@ -12,7 +12,7 @@ resource "Order" do
   describe "example metadata" do
     subject { example.metadata }
 
-    its([:resource_name]) { should eq("Order") }
+    its([:group_name]) { should eq("Order") }
     its([:document]) { should be_true }
   end
 

@@ -22,6 +22,10 @@ module RspecApiDocumentation
           .join('/')
       end
 
+      def http_method
+        self.rspec_example.metadata[:method]
+      end
+
       def index_number
         n = ancestors_index
         n << '.' unless n.empty?
@@ -37,7 +41,7 @@ module RspecApiDocumentation
       end
 
       def should_document?
-        return false if pending? || !metadata[:resource_name] || !metadata[:document]
+        return false if pending? || !metadata[:group_name] || !metadata[:document]
         true
       end
 

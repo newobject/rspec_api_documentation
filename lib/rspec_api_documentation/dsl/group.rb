@@ -1,5 +1,5 @@
 module RspecApiDocumentation::DSL
-  module Resource
+  module Group
     extend ActiveSupport::Concern
 
     module ClassMethods
@@ -23,7 +23,7 @@ module RspecApiDocumentation::DSL
       def resource(*args, &block)
         options = if args.last.is_a?(Hash) then args.pop else {} end
         options[:api_doc_dsl] = :resource
-        options[:resource_name] = args.first
+        options[:group_name] = args.first
         options[:document] ||= :all
         args.push(options)
         context(*args, &block)

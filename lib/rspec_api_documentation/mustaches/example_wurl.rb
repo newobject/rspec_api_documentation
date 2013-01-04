@@ -19,6 +19,21 @@ module RspecApiDocumentation
         "#{index_number}. #{description}"
       end
 
+      def http_method_class
+        case self.http_method
+        when :get
+          'icon-info-sign'
+        when :put
+          'icon-edit'
+        when :post
+          'icon-plus'
+        when :delete
+          'icon-trash'
+        else
+          'icon-question-sign'
+        end
+      end
+
       def dir_path
         [@example.ancestors_name, @example.dir_name]
           .select{|name| name && !name.empty?}
