@@ -42,13 +42,13 @@
   <ul class="breadcrumb">
     {{#ancestors}}
       <li>
-        <a href="{{ url_prefix }}/{{ file_path }}">{{ description }}</a>
+        <a href="{{ url_prefix }}/{{ file_path }}">{{ index_and_desc }}</a>
         <span class="divider">/</span>
       </li>
     {{/ancestors}}
     <li class="active">
       <i class="{{http_method_class}}"></i>
-      {{index_number}}. {{description}}
+      {{index_and_desc}}
     </li>
   </ul>
 
