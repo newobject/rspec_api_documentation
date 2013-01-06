@@ -29,6 +29,8 @@ module RspecApiDocumentation
 
     def process(method, path, params = {}, headers ={})
       do_request(method, path, params, headers)
+      return unless headers[:document]
+
       document_example(method.to_s.upcase, path)
     end
 

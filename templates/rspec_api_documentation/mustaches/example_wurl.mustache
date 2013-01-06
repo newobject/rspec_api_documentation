@@ -46,18 +46,13 @@
       </li>
     {{/ancestors}}
     <li class="active">
-      <i class="{{http_method_class}}"></i>
-      {{index_and_desc}}
+      {{index_number}}.
+      <span class="label {{http_method_class}}">{{http_method}}</span>
+      {{description}}
     </li>
   </ul>
 
   <div class="article">
-    {{# explanation }}
-    <p class="explanation">
-      {{ explanation }}
-    </p>
-    {{/ explanation }}
-
     {{# has_desc }}
     <h2>Description</h2>
     {{# desc_blocks }}

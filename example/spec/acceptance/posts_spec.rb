@@ -107,9 +107,15 @@ group "Posts" do
   end
 
   get "/posts/multi_format_outputs" do
-    example_request "Multi format" do
+    before(:each) {
+      client.get("/posts/multi_format_outputs")
+    }
+
+    example_request "Multi format 1" do
       status.should == 200
-      self.new_request({ :error => 'Hello world' }, headers)
+    end
+
+    example_request "Multi format 2", {:error => 'Hello world'} do
       status.should == 200
     end
   end

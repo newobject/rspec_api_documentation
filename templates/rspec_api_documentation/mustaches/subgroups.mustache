@@ -6,8 +6,11 @@
   <ul class="unstyled api">
     {{# examples }}
     <li class="api">
-      <i class="{{http_method_class}}"></i>
-      <a href="{{ url_prefix }}/{{file_path}}">{{index_and_desc}}</a>
+      <a href="{{ url_prefix }}/{{file_path}}">
+        {{index_number}}.
+        <span class="label {{http_method_class}}">{{http_method}}</span>
+        {{description}}
+      </a>
     </li>
     {{/ examples }}
   </ul>

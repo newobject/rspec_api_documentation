@@ -38,15 +38,15 @@ module RspecApiDocumentation
       def http_method_class
         case self.http_method
         when :get
-          'icon-info-sign'
+          'label-info'
         when :put
-          'icon-edit'
+          'label-warning'
         when :post
-          'icon-plus'
+          'label-inverse'
         when :delete
-          'icon-trash'
+          'label-important'
         else
-          'icon-question-sign'
+          ''
         end
       end
 

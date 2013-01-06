@@ -15,7 +15,8 @@ module RspecApiDocumentation::DSL
     end
 
     def new_request(params, headers)
-      client.send(self.http_method, self.route, params, headers)
+      do_request(params)
+      instance_eval &block if block_given?
     end
 
     def http_method
@@ -57,7 +58,7 @@ module RspecApiDocumentation::DSL
         params_or_body = respond_to?(:raw_post) ? raw_post : params
       end
 
-      client.send(method, path_or_query, params_or_body, headers)
+      client.send(method, path_or_query, params_or_body, { :document => true }.merge!(headers))
     end
 
     def query_string
@@ -74,7 +75,7 @@ module RspecApiDocumentation::DSL
     end
 
     def headers
-      return unless example.metadata[:headers]
+      return {} unless example.metadata[:headers]
       example.metadata[:headers].inject({}) do |hash, (header, value)|
         if value.is_a?(Symbol)
           hash[header] = send(value) if respond_to?(value)

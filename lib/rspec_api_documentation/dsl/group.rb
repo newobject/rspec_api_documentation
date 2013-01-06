@@ -22,7 +22,7 @@ module RspecApiDocumentation::DSL
 
       def group(*args, &block)
         options = if args.last.is_a?(Hash) then args.pop else {} end
-        options[:api_doc_dsl] = :resource
+        options[:api_doc_dsl] = :group
         options[:group_name] = args.first
         options[:document] ||= :all
         args.push(options)
