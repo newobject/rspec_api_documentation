@@ -6,6 +6,7 @@
   <link rel="stylesheet" href="{{url_prefix}}/assets/stylesheets/codemirror.css"/>
   <link rel="stylesheet" href="{{url_prefix}}/assets/stylesheets/application.css"/>
   <link rel="stylesheet" href="{{url_prefix}}/assets/stylesheets/main.css"/>
+  <link rel="stylesheet" href="{{url_prefix}}/assets/stylesheets/jsoneditor.css"/>
   <script src="{{url_prefix}}/assets/javascripts/jquery-1-7-2.js"></script>
   <script src="{{url_prefix}}/assets/javascripts/jquery-livequery.js"></script>
   <script src="{{url_prefix}}/assets/javascripts/jquery-base64.js"></script>
@@ -16,9 +17,7 @@
   <script src="{{url_prefix}}/assets/javascripts/mode/javascript/javascript.js"></script>
   <script src="{{url_prefix}}/assets/javascripts/mode/xml/xml.js"></script>
   <script src="{{url_prefix}}/assets/javascripts/application.js"></script>
-  <script>
-
-  </script>
+  <script src="{{url_prefix}}/assets/javascripts/jsoneditor.js"></script>
   <style>
     td.required .name:after {
       float: right;
@@ -111,7 +110,10 @@
       {{# request_body }}
       <h3>Body</h3>
 
-      <div class="request body"><textarea>{{ request_body }}</textarea></div>
+      <div class="request body">
+        <textarea class="hide">{{{ request_body }}}</textarea>
+        <div class="content"></div>
+      </div>
       {{/ request_body }}
 
       {{# curl }}
@@ -254,7 +256,10 @@
         {{# response_body }}
         <h3>Body</h3>
 
-        <div class="response body"><textarea>{{{ response_body }}}</textarea></div>
+        <div class="response body">
+          <textarea class="hide">{{{ response_body }}}</textarea>
+          <div class="content"></div>
+        </div>
         {{/ response_body }}
       </div>
     </div>
@@ -262,5 +267,6 @@
     {{/ requests }}
   </div>
 </div>
+
 </body>
 </html>

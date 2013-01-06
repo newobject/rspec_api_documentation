@@ -51,11 +51,17 @@ function Wurl(wurlForm) {
   this.$wurlForm = $(wurlForm);
   var self = this;
 
-  this.requestBodyMirror = mirror(this.$wurlForm.find('.post_body textarea')[0], $('.request.content_type', this.$wurlForm).val(), {});
+  //this.$wurlForm.find(".request.body").each(function(){
+    //var $request = $(this);
+    //var json = JSON.parse($request.find("textarea").val());
+    //new JSONEditor($request.find(".content")[0], { mode: 'viewer' }, json);
+  //});
 
-  if(this.$wurlForm.find('.response.body textarea').length > 0){
-    this.responseBodyMirror = mirror(this.$wurlForm.find('.response.body textarea')[0], $('.response.content_type', this.$wurlForm).val(), { "readOnly": true, "lineNumbers":true});
-  }
+  this.$wurlForm.find(".response.body").each(function(){
+    var $response = $(this);
+    var json = JSON.parse($response.find("textarea").val());
+    new JSONEditor($response.find(".content")[0], { mode: 'viewer' }, json);
+  });
 
   $('.give_it_a_wurl', this.$wurlForm).click(function (event) {
     event.preventDefault();
@@ -245,9 +251,21 @@ $(function () {
     wurl = new Wurl(wurlForm);
   });
 
-  var $textAreas = $('.request.body textarea');
-  $textAreas.each(function(i, textarea) {
-    var contentType = $(textarea).parents('div.request').find('.request.content_type').val();
-    mirror(textarea, contentType, {"readOnly":true, "lineNumbers": true});
+  $(".request.body").each(function(){
+    var $request = $(this);
+    var $textArea = $request.find("textarea");
+    try{
+      var json = JSON.parse($textArea.val());
+      new JSONEditor($request.find(".content")[0], { mode: 'viewer' }, json);
+    }catch(e){
+      var contentType = $textArea.parents('div.request').find('.request.content_type').val();
+      mirror($textArea[0], contentType, {"readOnly":true, "lineNumbers": true});
+    }
   });
+
+  //var $textAreas = $('.request.body textarea');
+  //$textAreas.each(function(i, textarea) {
+    //var contentType = $(textarea).parents('div.request').find('.request.content_type').val();
+    //mirror(textarea, contentType, {"readOnly":true, "lineNumbers": true});
+  //});
 });
